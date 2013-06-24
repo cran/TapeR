@@ -1,0 +1,6 @@
+v02 -> v03
+Replaced SK.par.lme with par.lme in E_DHx_HmDm_HT.f, E_DHx_HmDm_HT_CIdHt.f.R
+
+Replaced knt_y, ord_y by knt_z, ord_z in TapeR_FIT_LME.f
+
+Deleted SK.par.lme in qD.rout.f

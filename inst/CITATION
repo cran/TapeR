@@ -1,0 +1,17 @@
+citHeader("To cite package 'TapeR' in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry = "Manual",
+         title = "TapeR: Flexible tree taper curves based on Semiparametric Mixed Models",
+         author = personList(as.person("Edgar Kublin"),
+                             as.person("Johannes Breidenbach")),
+         year = year,
+         note = vers,
+         textVersion =
+         paste0("Edgar Kublin and Johannes Breidenbach (",
+                year,
+                "). TapeR: Flexible tree taper curves based on Semiparametric Mixed Models. ",
+                vers, "."))
+

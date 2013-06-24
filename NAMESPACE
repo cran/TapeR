@@ -1,0 +1,8 @@
+    #export all vars that do not strat with a '.'
+#exportPattern("^[[:alpha:]]+")
+
+export(TapeR_FIT_LME.f, E_DHx_HmDm_HT.f, E_DHx_HmDm_HT.f, E_DHx_HmDm_HT_CIdHt.f, E_HDx_HmDm_HT.f, E_VOL_AB_HmDm_HT.f)#), DxHx.df)#, HT.par, SK.par.lme)
+
+
+    #requires nlme
+import(nlme, splines, pracma)
