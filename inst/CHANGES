@@ -4,3 +4,19 @@ Replaced SK.par.lme with par.lme in E_DHx_HmDm_HT.f, E_DHx_HmDm_HT_CIdHt.f.R
 Replaced knt_y, ord_y by knt_z, ord_z in TapeR_FIT_LME.f
 
 Deleted SK.par.lme in qD.rout.f
+
+v03 -> v031
+
+"," after maintainer's name and his email adress deleted in DESCRIPTION
+
+Updated citation info
+
+Vignette source now in in folder vignettes/, not inst/doc/
+
+'require' calls to packages already attached by Depends removed
+
+Structure of help file changed such that internal functions are described at the end. (Not at the beginning as it was before.)
+
+v031 -> v032
+
+Changes in the DESCRIPTION file: Author field was removed, Description section slightly changed.

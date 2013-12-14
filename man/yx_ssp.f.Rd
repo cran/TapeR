@@ -1,4 +1,4 @@
-\name{BSplines}
+\name{yx_ssp.f}
 \alias{BSplines}
 \alias{CdN_DHxHt.f}
 \alias{dN.f}
@@ -208,12 +208,6 @@ yx_ssp.f(x, x.grd, y.grd, ...)
 }
 \value{
   Depends on the specific function.
-}
-\references{
-  Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
-  and volume prediction method based on mixed-effects B-spline
-  regression, Eur J For Res, accepted with minor revisions (11 June
-  2013).
 }
 \author{
   %%  ~~who you are~~

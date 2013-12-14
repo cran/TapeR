@@ -142,8 +142,7 @@ E_VOL_AB_HmDm_HT.f(Hm, Dm, mHt, sHt=0, A=NULL, B=NULL, iDH, par.lme, IA, nGL, ..
   %% ~put references to the literature/web site here ~
   Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
   and volume prediction method based on mixed-effects B-spline
-  regression, Eur J For Res, accepted with minor revisions (11 June
-  2013).
+  regression, Eur J For Res, 132:983-997.
 }
 \author{
   %%  ~~who you are~~
@@ -226,7 +225,7 @@ points(tree1$Hx, tree1$Dx)
 
 \dontrun{
 ## Calculate "exact" CIs. Careful: This takes a while!
-library(pracma)# for numerical integration with gaussLegendre()
+#library(pracma)# for numerical integration with gaussLegendre()
 tc.tree1.exact <- E_DHx_HmDm_HT_CIdHt.f(Hx=1:tree1$Ht[1],
 Hm=tree1$Hx[3], Dm=tree1$Dx[3], mHt = tree1$Ht[1], sHt = 1, par.lme =
 SK.par.lme) 

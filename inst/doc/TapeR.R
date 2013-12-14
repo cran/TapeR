@@ -20,7 +20,7 @@ library(TapeR)
 
 
 ###################################################
-### code chunk number 4: TapeR.Rnw:79-107
+### code chunk number 4: TapeR.Rnw:80-108
 ###################################################
 
 #load example data

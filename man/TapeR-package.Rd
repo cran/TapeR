@@ -8,18 +8,16 @@
 \description{
   This package implements functions for fitting taper curves (a semiparametric linear
   mixed effects taper model) to diameter measurements along
-  stems. Further functions are provided to estimate the uncertainty
+  stems. Further functions are provided to estimate the
+  variance/confidence intervals
   around the predicted curves, to calculate timber volume (also by
-  sections) and marginal (e.g., upper) diameters. Uncertainties of
-  single tree volume predictions resulting from uncertainties in the
-  taper equations tree height models (tariffs) are provided.  The
+  sections) and marginal (e.g., upper) diameters. For cases where tree
+  heights are not measured, methods for estimating
+  additional variance in volume predictions resulting from uncertainties in
+  tree height models (tariffs) are provided. The
   example data include the taper curve parameters for Norway spruce used
   in the 3rd German NFI fitted to 380 trees and a subset of section-wise
-  diameter measurements of these trees. The functions implemented here
-  are detailed in the following publication: Kublin, E., Breidenbach,
-  J., Kaendler, G. (2013) A flexible stem taper and volume prediction
-  method based on mixed-effects B-spline regression, Eur J For Res,
-  accepted with minor revisions (11 June 2013). 
+  diameter measurements of these trees.
 }
 \details{
 \tabular{ll}{
@@ -28,11 +26,10 @@ Type: \tab Package\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr
 }
-Fit taper models using diameter measurements along the stem. Use fitted
+Fits taper models using diameter measurements along the stem. Uses fitted
 models and arbitrary numbers of diameter measurements to estimate
-diameter at any position along the stem. Estimate timber volume from the
+diameter at any position along the stem. Estimates timber volume from the
 taper curve. Provides variances for all estimates.
-
 }
 \author{
   Edgar Kublin
@@ -43,7 +40,7 @@ taper curve. Provides variances for all estimates.
 \references{
 Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
 and volume prediction method based on mixed-effects B-spline regression,
-Eur J For Res, accepted with minor revisions (11 June 2013). 
+Eur J For Res, 132:983-997. 
 }
 
 \keyword{ package }

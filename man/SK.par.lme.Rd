@@ -14,14 +14,15 @@
 \format{
   See Value section of \code{\link{TapeR_FIT_LME.f}}.
 }
-\source{
-%%  ~~ reference to a publication or URL from which the data were
-%%  obtained ~~
-  Kublin (2012)
-}
+% \source{
+% %%  ~~ reference to a publication or URL from which the data were
+% %%  obtained ~~
+
+% }
 \references{
-  %%  ~~ possibly secondary sources and usages ~~
-  Kublin (2012)
+  Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
+  and volume prediction method based on mixed-effects B-spline
+  regression, Eur J For Res, 132:983-997.
 }
 \examples{
 data(SK.par.lme)

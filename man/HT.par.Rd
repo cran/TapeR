@@ -24,14 +24,18 @@ List of 4
 % \details{
 % %%  ~~ If necessary, more details than the __description__ above ~~
 % }
-\source{
-%%  ~~ reference to a publication or URL from which the data were
-%%  obtained ~~
-Kublin (2012)
-}
+% \source{
+% %%  ~~ reference to a publication or URL from which the data were
+% %%  obtained ~~
+%   Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
+%   and volume prediction method based on mixed-effects B-spline
+%   regression, Eur J For Res, 132:983-997.
+% }
 \references{
   %%  ~~ possibly secondary sources and usages ~~
-  Kublin (2012)
+  Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
+  and volume prediction method based on mixed-effects B-spline
+  regression, Eur J For Res, 132:983-997.  
 }
 \examples{
 data(HT.par)

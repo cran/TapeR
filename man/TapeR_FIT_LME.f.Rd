@@ -82,8 +82,7 @@ Components of the \code{par.lme} list
 \references{
   Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper
   and volume prediction method based on mixed-effects B-spline
-  regression, Eur J For Res, accepted with minor revisions (11 June
-  2013).
+  regression, Eur J For Res, 132:983-997.
 }
 \author{
 Edgar Kublin

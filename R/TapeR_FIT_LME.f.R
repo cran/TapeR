@@ -2,7 +2,7 @@ TapeR_FIT_LME.f <-
 function(Id,x,y,knt_x,ord_x,knt_z,ord_z,IdKOVb = "pdSymm", ...){
 #   ************************************************************************************************
 
-		require(nlme)
+		## require(nlme)
 
 	    BS_x  	= BSplines(knots = knt_x, ord = ord_x, der = 0, x = x)   ;# fix(BS.x)
 	   	BS_z  	= BSplines(knots = knt_z, ord = ord_z, der = 0, x = x)   ;# fix(BS.x)
