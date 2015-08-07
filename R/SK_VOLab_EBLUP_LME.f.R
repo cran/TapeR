@@ -37,7 +37,7 @@ function(xm, ym, a=0, b=1, Ht, par.lme, IntPolOpt = T, ...){
 	#   ********************************************
 
 	#   --------------------------------------------------------------------------------
-	#   Fehler integriertes Schaftvolumen - Lappi (2006) & Press et al (1986 §4.6 /2007)
+	#   Fehler integriertes Schaftvolumen - Lappi (2006) & Press et al (1986 par 4.6 /2007)
 	#   --------------------------------------------------------------------------------
 
 		hx.grd      	= xp
@@ -50,7 +50,7 @@ function(xm, ym, a=0, b=1, Ht, par.lme, IntPolOpt = T, ...){
 		ED_hx1.grd    	= as.vector(SK_LME$yp)
 		ED_hx2.grd    	= as.vector(SK_LME$yp)
 
-	#   Integrand für das innere Integral :.........................................................
+	#   Integrand fuer das innere Integral :.........................................................
 	#	http://127.0.0.1:17175/library/base/html/outer.html
 
 	#   Formel (13) Summanden 2+3:..................................................................
@@ -69,7 +69,7 @@ function(xm, ym, a=0, b=1, Ht, par.lme, IntPolOpt = T, ...){
 			G_hx1hx2.grd   = VARD_hx1.grd%o%VARD_hx2.grd + G_hx1hx2.grd
 		}
 
-	#   Integrand für das äußere Integral :.........................................................
+	#   Integrand fuer das aeussere Integral :.........................................................
 
 		Hx1.grd = rep(0,nrow(G_hx1hx2.grd))
 

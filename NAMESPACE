@@ -6,3 +6,9 @@ export(TapeR_FIT_LME.f, E_DHx_HmDm_HT.f, E_DHx_HmDm_HT.f, E_DHx_HmDm_HT_CIdHt.f,
 
     #requires nlme
 import(nlme, splines, pracma)
+
+    #resolve NOTE
+importFrom("graphics", "matlines", "plot")
+importFrom("stats", "anova", "cor", "cov2cor", "dnorm", "integrate",
+           "pnorm", "predict", "qt", "smooth.spline", "spline",
+           "uniroot", "vcov")

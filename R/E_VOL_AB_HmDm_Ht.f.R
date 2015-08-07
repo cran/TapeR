@@ -4,8 +4,8 @@ function(Hm, Dm, mHt, A = NULL, B = NULL, iDH = "D", par.lme, ...){
 
 #		Hm, Dm, mHt = mw_HtT; A = NULL; B = c(7); par.lme = SK.par.lme
 
-#       A - unterer Grenzdurchmesser/ -höhe
-#		B - oberer Grenzdurchmesser / -höhe
+#       A - unterer Grenzdurchmesser/ -hoehe
+#		B - oberer Grenzdurchmesser / -hoehe
 
 		Ht = max(Hm,mHt)
 
@@ -34,7 +34,7 @@ function(Hm, Dm, mHt, A = NULL, B = NULL, iDH = "D", par.lme, ...){
 			}
 		}
 
-#       Abschnittsvolumen zu den Kalibrierungsdaten (Hm,Dm) und Schafthöhe Ht :.....................
+#       Abschnittsvolumen zu den Kalibrierungsdaten (Hm,Dm) und Schafthoehe Ht :.....................
 
 #       ----------------------------------------------------------
 		SK_VOLab = SK_VOLab_EBLUP_LME.f(xm, ym, a, b, Ht, par.lme)

@@ -5,14 +5,14 @@ function(Hx, Hm, Dm, mHt, sHt, par.lme, ...){
 #	mHt = mw_HtT; sHt = sd_HtT; par.lme = SK.par.lme
 
 
-	#	Hx 			= seq(0,mw_HtT + 0*sd_HtT,length.out=NHx) #     Hx für untere Grenze (SK_m: mH)
+	#	Hx 			= seq(0,mw_HtT + 0*sd_HtT,length.out=NHx) #     Hx fuer untere Grenze (SK_m: mH)
 
 		if(sHt > 0){
 
 			NHx 		= length(Hx)
 
-			qD_u  		= rep(0,NHx)                # 	CIu E[[D(Hx)|Ht/Hm,Dm]|N(Ht|µHT(D1.3),sdHT((D1.3))]
-			qD_o  		= rep(0,NHx)                #   CIo E[[D(Hx)|Ht/Hm,Dm]|N(Ht|µHT(D1.3),sdHT((D1.3))]
+			qD_u  		= rep(0,NHx)                # 	CIu E[[D(Hx)|Ht/Hm,Dm]|N(Ht|muHT(D1.3),sdHT((D1.3))]
+			qD_o  		= rep(0,NHx)                #   CIo E[[D(Hx)|Ht/Hm,Dm]|N(Ht|muHT(D1.3),sdHT((D1.3))]
 
 			pD_u        = rep(0,NHx)
 			pD_o        = rep(0,NHx)
@@ -70,14 +70,14 @@ function(Hx, Hm, Dm, mHt, sHt, par.lme, ...){
 			cbind(CIu_DHx[,3],CIu_DHx[,1:2],cP_CIu_DHx[,1:2])
 
 		#   ************************************************************************************************
-		#   				Obergrenze CI(D(Hx)) für Schaftkurve kalibriert mit Hm,Dm und Tarifhöhe
+		#   				Obergrenze CI(D(Hx)) fuer Schaftkurve kalibriert mit Hm,Dm und Tarifhoehe
 		#   ************************************************************************************************
 
 		#	NHx 		= 25
-		#	Hx 			= seq(0,mw_HtT + 2.0*sd_HtT,length.out=NHx)    #   Hx für obere Grenze (SK_o:mH+2sH)
+		#	Hx 			= seq(0,mw_HtT + 2.0*sd_HtT,length.out=NHx)    #   Hx fuer obere Grenze (SK_o:mH+2sH)
 
-			qD_u  		= rep(0,NHx)                # 	CIu E[[D(Hx)|Ht/Hm,Dm]|N(Ht|µHT(D1.3),sdHT((D1.3))]
-			qD_o  		= rep(0,NHx)                #   CIo E[[D(Hx)|Ht/Hm,Dm]|N(Ht|µHT(D1.3),sdHT((D1.3))]
+			qD_u  		= rep(0,NHx)                # 	CIu E[[D(Hx)|Ht/Hm,Dm]|N(Ht|muHT(D1.3),sdHT((D1.3))]
+			qD_o  		= rep(0,NHx)                #   CIo E[[D(Hx)|Ht/Hm,Dm]|N(Ht|muHT(D1.3),sdHT((D1.3))]
 
 			pD_u        = rep(0,NHx)
 			pD_o        = rep(0,NHx)

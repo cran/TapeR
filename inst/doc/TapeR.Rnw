@@ -28,12 +28,12 @@
 
 \title{TapeR: Flexible stem taper modelling}
 \author{Edgar Kublin\thanks{Forest Research Institute of
-    Baden-W{\"u}rttemberg, Freiburg, Germany}, Johannes Breidenbach\thanks{Norwegian Forest and Landscape
-    Institute, 1431 {\AA}s, Norway, job@skogoglandskap.no, Tel.: +47 64 94 89 81}}
+    Baden-W{\"u}rttemberg, Freiburg, Germany}, Johannes Breidenbach\thanks{Norwegian Institute of Bioeconomy Research, 1431 {\AA}s, Norway, job@nibio.no}}
 %%\date{}
 %\address{Norwegian Institute for Forest and Landscape}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 \maketitle
 
 %\tableofcontents

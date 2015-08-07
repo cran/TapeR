@@ -5,8 +5,8 @@ function(Hm, Dm, mHt, sHt = 0, A = NULL, B = NULL, iDH = "D", par.lme, IA = F, n
 #		Hm; Dm; mHt = mw_HtT; sHt = sd_HtT; a = NULL; b = 7					; iDH = "DH"; par.lme = SK.par.lme; IA = F; nGL = 51
 #		Hm; Dm; mHt = mw_HtT; sHt = sd_HtT; a = NULL; b = Int_E_VOL_dHt$Hb	; iDH = "H"; par.lme = SK.par.lme; IA = F; nGL = 51
 
-#       a - unterer Grenzdurchmesser/ -höhe (iDH = "H")
-#		b - oberer Grenzdurchmesser/  -höhe
+#       a - unterer Grenzdurchmesser/ -hoehe (iDH = "H")
+#		b - oberer Grenzdurchmesser/  -hoehe
 
 		Ht = max(Hm,mHt)
 
@@ -35,7 +35,7 @@ function(Hm, Dm, mHt, sHt = 0, A = NULL, B = NULL, iDH = "D", par.lme, IA = F, n
 			}
 		}
 
-		if(sHt > 0){#	Höhentarifvarianz - Int{VOLab|(Hm,Dm),Ht]dHt} :.............................
+		if(sHt > 0){#	Hoehentarifvarianz - Int{VOLab|(Hm,Dm),Ht]dHt} :.............................
 
 			Ht = max(Hm,mHt)
 
@@ -48,7 +48,7 @@ function(Hm, Dm, mHt, sHt = 0, A = NULL, B = NULL, iDH = "D", par.lme, IA = F, n
 			#	SK_VOLab 	= SK_VOLab_EBLUP_LME.f(xm, ym, a, b, Ht, par.lme)
 			#	E_VOLab_m 	= SK_VOLab$VOL; VAR_VOLab_m = SK_VOLab$VAR_VOL ; cbind(E_VOLab_m,VAR_VOLab_m)
 
-		}else{ #    RotationsIntegral über die kalibrierte Schaftkurve E[D(Hx)|(Hm,Dm),Ht] :........
+		}else{ #    RotationsIntegral ueber die kalibrierte Schaftkurve E[D(Hx)|(Hm,Dm),Ht] :........
 
 
 		#   ****************************************************************************************

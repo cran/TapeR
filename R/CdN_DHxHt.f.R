@@ -2,7 +2,7 @@ CdN_DHxHt.f <-
 function(Ht, Hx, qD, Hm, Dm, par.lme, ...){#Prb N[D(Hx|N(mw(Ht),sd(Ht))<= qD| Ht/Hm,Dm]
 #   ------------------------------------------------------------------------------------------------
 
-#   Percentil für geschätzten Schaftkurvendurchmesser an der Stelle Hx gegeben Ht und (Hm,Dm) :.....
+#   Percentil fuer geschaetzten Schaftkurvendurchmesser an der Stelle Hx gegeben Ht und (Hm,Dm) :.....
 
 		if(Ht>Hx) {
 

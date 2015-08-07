@@ -31,7 +31,7 @@ function(Hm, Dm, A = NULL, B = NULL, iDH = "D", mw_HtT, sd_HtT, par.lme, IA = F,
 				Int_VAR_VOLab 	= Int_VAR_VOLab+cc$w[i]*dN_Ht[i]*VAR_VOLab[i]
 			}
 
-		}else{ # Numerische Integration (Gauss - Legendre) über die Höhenverteilung :...............
+		}else{ # Numerische Integration (Gauss - Legendre) ueber die Hoehenverteilung :...............
 
 			ncc = nGL
 

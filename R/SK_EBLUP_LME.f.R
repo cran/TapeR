@@ -19,7 +19,7 @@ function(xm, ym, xp, par.lme, ...){
 		b_fix 		= par.lme$b_fix
 		KOVb_fix    = par.lme$KOVb_fix
 
-	#   Kovarianz für die Random Effekten (fit.lme):................................................
+	#   Kovarianz fuer die Random Effekte (fit.lme):................................................
 
 		KOV_b 		= par.lme$KOVb_rnd
 		Z_KOVb_Zt_k = Z_k%*%KOV_b%*%t(Z_k)                                			# fix(Z_KOVb_Zt)
@@ -39,7 +39,7 @@ function(xm, ym, xp, par.lme, ...){
 		KOV_y_k		= Z_KOVb_Zt_k + R_k                       	#   SIGMA_k in V&C(1997)(6.2.3)
 		KOVinv_y_k  = solve(KOV_y_k);                    		#   SIGMA_k^(-1)
 
-	#   EBLUP - Posterior mean (b_k) aus Einhängung (xm,ym) berechnen :.............................
+	#   EBLUP - Posterior mean (b_k) aus Einhaengung (xm,ym) berechnen :.............................
 
 	#   ***************************************************************
 		EBLUP_b_k 	= KOV_b%*%t(Z_k)%*%KOVinv_y_k%*%(y_k - X_k%*%b_fix); #   V&C(1997) (6.2.49)
@@ -57,7 +57,7 @@ function(xm, ym, xp, par.lme, ...){
 	#   ********************************************************************************************
 
 	#   ----------------------------------------------------------------------------------------
-	#   		Vorhersageintervalle Schaftkurve lmeBLUP (SS) mit Einhängung in (x_k,y_k)
+	#   		Vorhersageintervalle Schaftkurve lmeBLUP (SS) mit Einhaengung in (x_k,y_k)
 	#   ----------------------------------------------------------------------------------------
 
 	if(T){
@@ -68,7 +68,7 @@ function(xm, ym, xp, par.lme, ...){
 
 		Vv_k = KOV_b - KOV_b%*%t(Z_k)%*%KOVinv_y_k%*%Z_k%*%KOV_b
 
-	#   Vorhersage Varianz: KOV[(^b_k-b_k)|y_k,ß,tetha(sig2_eps)] - V&C (6.2.51):...................
+	#   Vorhersage Varianz: KOV[(^b_k-b_k)|y_k,beta,tetha(sig2_eps)] - V&C (6.2.51):...................
 
 		V_k = Vv_k + KOV_b%*%t(Z_k)%*%KOVinv_y_k%*%X_k%*%KOVb_fix%*%t(X_k)%*%KOVinv_y_k%*%Z_k%*%KOV_b
 

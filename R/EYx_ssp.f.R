@@ -2,7 +2,7 @@ EYx_ssp.f <-
 function(knt,coe,x, ...){
 #   ************************************************************************************************
 
-#   Berechnung kubischer smoothing.spline mit linearer Extrapolation außerhalb der Knoten
+#   Berechnung kubischer smoothing.spline mit linearer Extrapolation ausserhalb der Knoten
 
 		#	knt = knt_ssp.mw; x = min(x.plt); coe = coe_ssp.mw; x = -1
 
@@ -17,7 +17,7 @@ function(knt,coe,x, ...){
 			y_x 	= y_u + (x-x_u)*dy_u
 
 		}else{
-			 if (x>max(knt)){# lineare Extrapolation oberhalb des größten Knoten
+			 if (x>max(knt)){# lineare Extrapolation oberhalb des groessten Knoten
 
 				x_o 	= max(knt)
 
