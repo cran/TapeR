@@ -1,10 +1,37 @@
+#' @title Int_E_VOL_AB_HmDm_HT_dHt.f
+#' @description Internal function not usually called by users
+#' @param Hm Numeric vector of stem heights (m) along which diameter measurements 
+#' were taken for calibration. Can be of length 1. Must be of same length as \code{Dm}
+#' @param Dm Numeric vector of diameter measurements (cm) taken for calibration.
+#'  Can be of length 1. Must be of same length as \code{Hm}
+#' @param A Numeric scalar defining the lower threshold of a stem section for volume
+#' estimation. Depends on \code{iDH}. If \code{iDH} = "D", a diameter
+#' (cm), if \code{iDH} = "H", a height (m). If NULL, section starts at lowest point.
+#' @param B Numeric scalar defining the upper threshold of a stem section for volume
+#' estimation. Depends on \code{iDH}. If \code{iDH} = "D", a diameter
+#' (cm), if \code{iDH} = "H", a height (m). If NULL, section ends at tip.
+#' @param iDH Character scalar. Either "D" or "H". Type of threshold for
+#' section volume estimation. See \code{A} or \code{B}.
+#' @param mw_HtT Scalar. Tree height (m)
+#' @param sd_HtT Scalar. Standard deviation of stem height. Can be 0 if height was 
+#' measured without error
+#' @param par.lme List of taper model parameters obtained by \code{\link{TapeR_FIT_LME.f}} 
+#' @param Rfn list with function name to provide estimated or assumed residual 
+#' variances for the given measurements, optionally parameters for such functions
+#' @param IA Logic scalar. If TRUE, variance calculation of height
+#' estimate based on 2-point distribution. If FALSE, variance calculation of height
+#' estimate based on Normal approximation.
+#' @param nGL Numeric scalar. Number of support points for numerical integration.
+#' @param ... not currently used
+#' @details integrating the taper curve considering uncertainty of height 
+#' measurement
+#' @return list with expected volume, variance of volume and squared expected value
+#' incorporating the uncertainty of height measurement
+#' @author Edgar Kublin
+#' @import pracma
+
 Int_E_VOL_AB_HmDm_HT_dHt.f <-
-function(Hm, Dm, A = NULL, B = NULL, iDH = "D", mw_HtT, sd_HtT, par.lme, IA = F, nGL = 51, ...){
-#   ------------------------------------------------------------------------------------------------
-
-#		Hm; Dm; mHt = mw_HtT; sHt = sd_HtT; A = NULL; B = Int_E_VOL_dHt$Hb; iDH = "H"; par.lme = SK.par.lme; IA = F; nGL = 51
-
-#   	Da = NULL; Db = 7; mw_HtT; sd_HtT; par.lme = SK.par.lme; nGL = 51
+function(Hm, Dm, A=NULL, B=NULL, iDH="D", mw_HtT, sd_HtT, par.lme, Rfn=list(fn="sig2"), IA=FALSE, nGL=51, ...){
 
 		if(IA){	# Two Point Approximation Lappi(2006)
 
@@ -17,7 +44,7 @@ function(Hm, Dm, A = NULL, B = NULL, iDH = "D", mw_HtT, sd_HtT, par.lme, IA = F,
 			for (i in 1:ncc){
 
 			#   ------------------------------------------------------------------------------------
-				VOL = E_VOL_AB_HmDm_Ht.f(Hm, Dm, mHt=cc$x[i], A, B, iDH, par.lme)
+				VOL = E_VOL_AB_HmDm_Ht.f(Hm, Dm, mHt=cc$x[i], A, B, iDH, par.lme, Rfn)
 			#   ------------------------------------------------------------------------------------
 
 				E_VOLab[i] 		= as.numeric(VOL$E_VOL)
@@ -31,7 +58,7 @@ function(Hm, Dm, A = NULL, B = NULL, iDH = "D", mw_HtT, sd_HtT, par.lme, IA = F,
 				Int_VAR_VOLab 	= Int_VAR_VOLab+cc$w[i]*dN_Ht[i]*VAR_VOLab[i]
 			}
 
-		}else{ # Numerische Integration (Gauss - Legendre) ueber die Hoehenverteilung :...............
+		}else{ # Numerische Integration (Gauss - Legendre) ueber die Hoehenverteilung
 
 			ncc = nGL
 
@@ -49,7 +76,7 @@ function(Hm, Dm, A = NULL, B = NULL, iDH = "D", mw_HtT, sd_HtT, par.lme, IA = F,
 		#       Ht[i] = cc$x[i]
 
 			#   ------------------------------------------------------------------------------------
-				VOL = E_VOL_AB_HmDm_Ht.f(Hm, Dm, mHt=cc$x[i], A, B, iDH, par.lme)
+				VOL = E_VOL_AB_HmDm_Ht.f(Hm, Dm, mHt=cc$x[i], A, B, iDH, par.lme, Rfn)
 			#   ------------------------------------------------------------------------------------
 
 				E_VOLab[i] 		= as.numeric(VOL$E_VOL)

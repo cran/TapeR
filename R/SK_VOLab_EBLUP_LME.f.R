@@ -1,24 +1,41 @@
+#' @title taper volume estimation
+#' @description Internal function not usually called by users
+#' @param xm relative heights for which measurements are available
+#' @param ym corresponding diameter measurements in height \code{xm}
+#' @param a relative height of lower threshold of stem section
+#' @param b relative height of upper threshold of stem section
+#' @param Ht tree height
+#' @param par.lme List of taper model parameters obtained by \code{\link{TapeR_FIT_LME.f}}
+#' @param Rfn list with function name to provide estimated or assumed residual 
+#' variances for the given measurements, optionally parameters for such functions
+#' @param IntPolOpt option for method of interpolation, if TRUE using a natural 
+#' interpolating spline (\code{\link[stats]{splinefun}}), if FALSE using a smoothing 
+#' spline (\code{\link[stats]{smooth.spline}}); defaults to TRUE
+#' @param ... not currently used
+#' @details with \code{Rfn=list(fn="zero")} one can decide whether the 
+#' measured diameters are forced to lie exactly on the taper curve; this 
+#' interferes somewhat with the \code{IntPolOpt}, which determines the method of
+#' taper curve point interpolation for integration. The default \code{TRUE} 
+#' (used throughout all function calls) applies natural interpolating splines, 
+#' hence this does not contradict the optional use of \code{Rfn=list(fn="zero")}. 
+#' @return List with two elements, the estimated volume and its variance 
+#' @author Edgar Kublin
+#' @importFrom stats integrate
+
 SK_VOLab_EBLUP_LME.f <-
-function(xm, ym, a=0, b=1, Ht, par.lme, IntPolOpt = T, ...){
-#   ------------------------------------------------------------------------------------------------
+function(xm, ym, a=0, b=1, Ht, par.lme, Rfn=list(fn="sig2"), IntPolOpt = TRUE, ...){
 
-	#	xm = xm_i; ym = ym_i; xp = xp_i; par.lme = SK_FIT_LME$par.lme
-
-	#	IntPolOpt = TRUE
-
-	#   Design Matrizen X und Z zu den Kalibrierungsdaten :.........................................
+	#   Design Matrizen X und Z zu den Kalibrierungsdaten :
 
 		xp  = c(seq(0,1,length.out=51));
 		xp 	= unique(xp[order(xp)])
 
-#       -------------------------
-		Cm 		= pi*0.25*1e-4*Ht                  # Skalierungskonstante D[cm]-->D[m] und H--> h=H/H_ges
-#       -------------------------
-
-#		SK_LME = SK_EBLUP_LME.f(xm = c(1.0/Ht,7/Ht), ym = c(D1_i,D7_i), xp = xp_i, par.lme = SK_FIT_LME$par.lme)
+  #       -------------------------
+		Cm 		= pi*0.25*1e-4*Ht    # Skalierungskonstante D[cm]-->D[m] und H--> h=H/H_ges
+  #       -------------------------
 
 	#   ********************************************
-		SK_LME = SK_EBLUP_LME.f(xm, ym, xp, par.lme)
+		SK_LME = SK_EBLUP_LME.f(xm, ym, xp, par.lme, Rfn=Rfn)
 	#   ********************************************
 
 		if(IntPolOpt){
@@ -96,8 +113,6 @@ function(xm, ym, a=0, b=1, Ht, par.lme, IntPolOpt = T, ...){
 	#   --------------------------------------------------------------------------------------------
 		VAR_SK_VOLab_EBLUP = Cm^2*Int_KOV_D2
 	#   --------------------------------------------------------------------------------------------
-
-	#	(STD_SK_VOLab_EBLUP  = sqrt(VAR_SkfVolInt_EBLUP))
 
 		return(list(VOL = SK_VOLab_EBLUP, VAR_VOL = VAR_SK_VOLab_EBLUP))
 

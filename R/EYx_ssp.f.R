@@ -1,3 +1,15 @@
+#' @title estimate cubic smoothing spline with linear extrapolation
+#' @description Internal function not usually called by users
+#' @param knt knots position of B-Splines
+#' @param coe estimated coefficient for B-Splines
+#' @param x position at which to evaluate B-Splines model
+#' @param ... not currently used
+#'
+#' @return expected diameter given knots and coefficients at position (height)
+#' \code{x}.
+#' @author Edgar Kublin
+#' @import splines
+
 EYx_ssp.f <-
 function(knt,coe,x, ...){
 #   ************************************************************************************************

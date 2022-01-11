@@ -1,22 +1,35 @@
 Package: TapeR
 Type: Package
 Title: Flexible Tree Taper Curves Based on Semiparametric Mixed Models
-Version: 0.3.3
-Date: 2015-08-07
+Version: 0.5.0
+Date: 2022-01-11
 Authors@R: c(person(given = "Edgar", family = "Kublin", role = "aut"),
-             person(given = "Johannes", family = "Breidenbach", role = c("ctb","cre"),
-					email = "job@nibio.no"))
-Description: Implementation of functions for fitting taper curves (a semiparametric linear mixed effects taper model) to diameter measurements along stems. Further functions are provided to estimate the uncertainty around the predicted curves, to calculate timber volume (also by sections) and marginal (e.g., upper) diameters. For cases where tree
-  heights are not measured, methods for estimating
+              person(given = "Johannes", family = "Breidenbach", role = c("ctb"),	
+              email = "job@nibio.no"),
+              person(given = "Christian", family = "Vonderach", role = c("ctb","cre"), 
+              email = "christian.vonderach@forst.bwl.de")
+					)
+Description: Implementation of functions for fitting taper curves (a semiparametric 
+  linear mixed effects taper model) to diameter measurements along stems. Further 
+  functions are provided to estimate the uncertainty around the predicted curves, 
+  to calculate timber volume (also by sections) and marginal (e.g., upper) diameters. 
+  For cases where tree heights are not measured, methods for estimating
   additional variance in volume predictions resulting from uncertainties in
-  tree height models (tariffs) are provided.  The example data include the taper curve parameters for Norway spruce used in the 3rd German NFI fitted to 380 trees and a subset of section-wise diameter measurements of these trees. The functions implemented here are detailed in the following publication: Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem taper and volume prediction method based on mixed-effects B-spline regression, Eur J For Res, 132:983-997.
+  tree height models (tariffs) are provided.  The example data include the taper 
+  curve parameters for Norway spruce used in the 3rd German NFI fitted to 380 trees 
+  and a subset of section-wise diameter measurements of these trees. The functions 
+  implemented here are detailed in Kublin, E., Breidenbach, J., Kaendler, G. (2013)
+  <doi:10.1007/s10342-013-0715-0>.
 License: GPL (>= 2)
 LazyLoad: yes
 Depends: nlme, splines, pracma
+Suggests: testthat
+RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2015-08-10 07:29:10 UTC; JOB
+Packaged: 2022-01-11 12:11:31 UTC; christian.vonderach
 Author: Edgar Kublin [aut],
-  Johannes Breidenbach [ctb, cre]
-Maintainer: Johannes Breidenbach <job@nibio.no>
+  Johannes Breidenbach [ctb],
+  Christian Vonderach [ctb, cre]
+Maintainer: Christian Vonderach <christian.vonderach@forst.bwl.de>
 Repository: CRAN
-Date/Publication: 2015-08-10 10:23:38
+Date/Publication: 2022-01-11 22:52:46 UTC
