@@ -21,7 +21,7 @@
 #' from tariff height estimates if tree height was not measured is incorporated.
 #' Using \code{Rfn} the taper curve can be forced through the measured 
 #' diameters, c.f. \code{\link{resVar}}.
-#' @return a list holding six elements:
+#' @return a list holding nine elements:
 #' \itemize{
 #'  \item{DHx: }{Numeric vector of diameters (cm) (expected value) along the 
 #'  heights given by \code{Hx}.}
@@ -31,10 +31,14 @@
 #'  \item{CI_Mean: }{Confidence interval. Matrix of the 95\% conf. int. for the 
 #'  expected value of the diameter (cm). First column: lower limit, second 
 #'  column: mean, third column: upper limit.}
+#'  \item{KOV_Mean: }{Variance-Covariance matrix for the expected value of the 
+#'  diameter.}
 #'  \item{MSE_Pred: }{Mean squared error for the prediction of the diameter.}
-#'  \item{CI_Mean: }{Prediction interval. Matrix of the 95\% conf. int. for the 
+#'  \item{CI_Pred: }{Prediction interval. Matrix of the 95\% conf. int. for the 
 #'  prediction of the diameter (cm). First column: lower limit, second column: 
 #'  mean, third column: upper limit.}
+#'  \item{KOV_Pred: }{Variance-Covariance matrix for the prediction of the 
+#'  diameter.}
 #'  \item{Rfn: }{Function applied for estimated or assumed residual variance.}
 #' }
 #' @author Edgar Kublin
@@ -288,8 +292,8 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 
 
 		return(list(DHx = DHx, Hx = Hx[order(Hx)],
-		            MSE_Mean = MSE_Mean, CI_Mean = CI_Mean,
-		            MSE_Pred = MSE_Pred, CI_Pred = CI_Pred,
+		            MSE_Mean = MSE_Mean, CI_Mean = CI_Mean, KOV_Mean = SK_m$KOV_Mean,
+		            MSE_Pred = MSE_Pred, CI_Pred = CI_Pred, KOV_Pred = SK_m$KOV_Pred,
 		            Rfn=Rfn))
 
   }

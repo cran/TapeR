@@ -40,7 +40,7 @@ variances for the given measurements, optionally parameters for such functions}
 \item{...}{not currently used}
 }
 \value{
-a list holding six elements:
+a list holding nine elements:
 \itemize{
  \item{DHx: }{Numeric vector of diameters (cm) (expected value) along the 
  heights given by \code{Hx}.}
@@ -50,10 +50,14 @@ a list holding six elements:
  \item{CI_Mean: }{Confidence interval. Matrix of the 95\% conf. int. for the 
  expected value of the diameter (cm). First column: lower limit, second 
  column: mean, third column: upper limit.}
+ \item{KOV_Mean: }{Variance-Covariance matrix for the expected value of the 
+ diameter.}
  \item{MSE_Pred: }{Mean squared error for the prediction of the diameter.}
- \item{CI_Mean: }{Prediction interval. Matrix of the 95\% conf. int. for the 
+ \item{CI_Pred: }{Prediction interval. Matrix of the 95\% conf. int. for the 
  prediction of the diameter (cm). First column: lower limit, second column: 
  mean, third column: upper limit.}
+ \item{KOV_Pred: }{Variance-Covariance matrix for the prediction of the 
+ diameter.}
  \item{Rfn: }{Function applied for estimated or assumed residual variance.}
 }
 }
