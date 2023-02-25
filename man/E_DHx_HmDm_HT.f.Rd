@@ -161,5 +161,5 @@ regression, Eur J For Res, 132:983-997.
 \code{\link{TapeR_FIT_LME.f}}
 }
 \author{
-Edgar Kublin
+Edgar Kublin and Christian Vonderach
 }

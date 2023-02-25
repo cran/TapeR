@@ -41,13 +41,13 @@
 #'  diameter.}
 #'  \item{Rfn: }{Function applied for estimated or assumed residual variance.}
 #' }
-#' @author Edgar Kublin
+#' @author Edgar Kublin and Christian Vonderach
 #' @references Kublin, E., Breidenbach, J., Kaendler, G. (2013) A flexible stem 
 #' taper and volume prediction method based on mixed-effects B-spline 
 #' regression, Eur J For Res, 132:983-997.
 #' @seealso \code{\link{TapeR_FIT_LME.f}}
 #' @importFrom stats qt predict
-#' @importFrom graphics matlines
+#' @importFrom graphics matlines lines points abline plot
 #' @export
 #'
 #' @examples
@@ -134,7 +134,7 @@ E_DHx_HmDm_HT.f <-
 function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 
 		if(sHt > 0){
-
+      p <- FALSE # print
 		#	SK.par.lme = par.lme
 
 			mw_HtT 	= mHt
@@ -145,6 +145,10 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			Ht_u	= mw_HtT - 2*sd_HtT
 			Ht_m    = mw_HtT
 			Ht_o	= mw_HtT + 2*sd_HtT
+			
+			sig2_eps  = par.lme$sig2_eps
+			dfRes    	= par.lme$dfRes
+			c_alpha 	= qt(p=0.025, df=dfRes, ncp=0, lower.tail = F, log.p = FALSE)
 
 		#   ------------------------------------------------------------------------
 		#   										CI_SK_u
@@ -155,29 +159,36 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			hx      = seq(0,1,length.out = sum(nx))
 
 			SK_u 	= SK_EBLUP_LME.f(xm = Hm/Ht_u, ym = Dm, xp = hx, par.lme, Rfn) # Kalibrierung/LME
-
-			u.ssp   = smooth.spline(x = hx*Ht_u, y = SK_u$yp, df=10)
-					  u.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    			#   u.ssp(Ht_u)=0
-
+        if(p) plot(x=hx*Ht_u, y=SK_u$yp, type="l", xlim=c(0, Ht_o), ylim=c(0, 50)) # expected lower curve
+			u.ssp   = smooth.spline(x = hx*Ht_u, y = SK_u$yp, all.knots = TRUE)
+			u.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    			#   u.ssp(Ht_u)=0
+			  if(p) lines(u.ssp, lty=2, col="red") # spline of expected lower curve
+		
 		#   CI_u(SK_m) :............................................................
 
 			SK_m    = SK_EBLUP_LME.f(xm = Hm/Ht_m, ym = Dm, xp = hx, par.lme, Rfn)
-
-			m.ssp   = smooth.spline(x = hx*Ht_m,  y = SK_m$CI_Pred[,1] , df=10)
-					  m.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    			#   m.ssp(Ht_m)=0
-
+			  if(p) points(x=hx*Ht_m, y=SK_m$yp, type="l", lwd=2) # expected mean curve
+			  if(p) points(x=hx*Ht_m, y=SK_m$CI_Pred[,1], type="l", lty=2) # lower PI mean curve
+			  if(p) points(x=hx*Ht_m, y=SK_m$CI_Pred[,3], type="l", lty=2) # upper PI mean curve
+			m.ssp   = smooth.spline(x = hx*Ht_m,  y = SK_m$CI_Pred[,1], all.knots = TRUE)
+			m.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    			#   m.ssp(Ht_m)=0
+			  if(p) lines(m.ssp, lty=2, col="red") # spline of lower prediction interval
+					        
 		#   CI_SK_u (Approximation):................................................
 
 		#	nx = c(30,20)
 
-			hx          = c(seq(0,0.3*Ht_u,length.out = nx[1]),seq(0.6*Ht_u,Ht_u,length.out = nx[2]))
+			hx          = c(seq(0, 0.3*Ht_u, length.out = nx[1]),
+			                seq(0.3*Ht_u, 0.6*Ht_u, length.out = 10),
+			                seq(0.6*Ht_u, Ht_u, length.out = nx[2]))
 
 			qu        	= predict(u.ssp,x = hx, deriv = 0)$y;   	qu 		= apply(cbind(0,qu),1,max)
 			qm        	= predict(m.ssp,x = hx, deriv = 0)$y;		qm 		= apply(cbind(0,qm),1,max)
 			qmin        = apply(cbind(qu,qm),1,min);				qmin 	= apply(cbind(qmin,0),1,max)
-
-		  qD_u.ssp	= smooth.spline(x = hx,  y = qmin, df=10); qD_u.ssp$fit$coef[length(qD_u.ssp$fit$coef)] = 0
-
+			  if(p) points(x=hx, y=qmin, lty=2, col="blue")
+		  qD_u.ssp	= smooth.spline(x = hx,  y = qmin, all.knots = TRUE)
+		  qD_u.ssp$fit$coef[length(qD_u.ssp$fit$coef)] = 0
+		    if(p) lines(qD_u.ssp, lty=3, col="blue", lwd=2) # spline of combined lower + expected mean lower interval
 		#   ----------------------------------------------------------------------------------------
 		#   										CI_SK_o
 		#   ----------------------------------------------------------------------------------------
@@ -185,27 +196,35 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			hx      	= seq(0,1,length.out = sum(nx))
 
 			SK_o		= SK_EBLUP_LME.f(xm = Hm/Ht_o, ym = Dm, xp = hx, par.lme, Rfn)
-
-			o.ssp       = smooth.spline(x = hx*Ht_o,  y = SK_o$yp, df=10); o.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    #   u.ssp(Ht_u)=0
-
+			  if(p) points(x=hx*Ht_o, y=SK_o$yp, type="l") # expected upper curve
+			
+			o.ssp       = smooth.spline(x = hx*Ht_o,  y = SK_o$yp, all.knots = TRUE); 
+			o.ssp$fit$coef[length(u.ssp$fit$coef)] = 0    #   u.ssp(Ht_u)=0
+			  if(p) lines(o.ssp, lty=2, col="green") # spline of expected upper curve
+      
 		#   ----------------------------------------------------------------------------------------
 
 			SK_m       	= SK_EBLUP_LME.f(xm = Hm/Ht_m, ym = Dm, xp = hx, par.lme, Rfn)
-			m.ssp       = smooth.spline(x = hx*Ht_m,  y = SK_m$CI_Pred[,3] , df=10)
-
+			  if(p) points(x=hx*Ht_m, y=SK_m$yp, type="l", lwd=2) # expected mean curve
+			m.ssp       = smooth.spline(x = hx*Ht_m,  y = SK_m$CI_Pred[,3], all.knots = TRUE)
+			  if(p) lines(m.ssp, lty=2, col="red") # spline of upper prediction interval
 		#   CI_SK_o (Approximation):................................................................
 
 		#	nx=c(30,20)
 
-			hx          = c(seq(0,0.3*Ht_o,length.out = nx[1]),seq(min(Ht_u,0.6*Ht_o),Ht_o,length.out=nx[2]))
+			hx          = c(seq(0, 0.3*Ht_o, length.out = nx[1]),
+			                seq(0.3*Ht_o, 0.6*Ht_o, length.out=10),
+			                seq(min(Ht_u, 0.6*Ht_o), Ht_o, length.out=nx[2]))
 
 			qm        	= predict(m.ssp,x = hx, deriv = 0)$y;	qm = apply(cbind(0,qm),1,max)
 			qo        	= predict(o.ssp,x = hx, deriv = 0)$y;	qo = apply(cbind(0,qo),1,max)
 
 			qmax        = apply(cbind(qm,qo),1,max)
-
-		    qD_o.ssp	= smooth.spline(x = hx,  y = qmax, df=10); qD_o.ssp$fit$coef[length(qD_o.ssp$fit$coef)] = 0
-
+			  if(p) points(x=hx, y=qmax, lty=2, col="blue")
+		  qD_o.ssp	= smooth.spline(x = hx,  y = qmax, all.knots = TRUE)
+		  qD_o.ssp$fit$coef[length(qD_o.ssp$fit$coef)] = 0
+		    if(p) lines(qD_o.ssp, lty=3, col="blue", lwd=2) # spline of combined upper + expected mean lower interval
+		    if(p) abline(v=c(0.3*Ht_o, 0.6*Ht_o))
 		#   ----------------------------------------------------------------------------------------
 
 
@@ -216,7 +235,7 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			hx = HHx/Ht_m; hx = apply(cbind(hx,1),1,min)
 
 			SK_m   	 = SK_EBLUP_LME.f(xm = Hm/Ht_m, ym = Dm, xp = hx, par.lme, Rfn)
-
+			  if(p) points(x=Hx, y=SK_m$yp, pch=3, cex=2)
 			DHx 	 = SK_m$yp
 			MSE_Mean = SK_m$MSE_Mean
 			MSE_Pred = SK_m$MSE_Pred
@@ -232,28 +251,48 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			qD_o[["y"]] = predict(qD_o.ssp,x = HHx)$y
 
 			CI_Mean = cbind(qD_u[["y"]],DHx,qD_o[["y"]])
-
-			sig2_eps  = par.lme$sig2_eps
-			dfRes    	= par.lme$dfRes
-			c_alpha 	= qt(p=0.025, df=dfRes, ncp=0, lower.tail = F, log.p = FALSE)
-
+			
+			# use upper interval boundary to deduce MSE 
+			# (lower is biased in the upper region of the taper curve because not lower than zero)
+			MSE_Mean <- as.vector(((qD_o[["y"]] - DHx)/c_alpha)^2)
+			KOV_Mean <- updateKOV(MSE_Mean, SK_m$KOV_Mean)
+			
+			## prediction interval
 			CI_Pred 	= CI_Mean
-
-		#	qD_u = CI_Mean[,2] - c_alpha*sqrt(MSE_Mean)
-		#   sqrt(MSE_Mean) = (CI_Mean[,2]-qD_u)/c_alpha
-
+      
+			# dci = approx. standard deviation
 			dci      	= sqrt(((DHx - qD_u[["y"]])/c_alpha)^2 + sig2_eps)
 			CI_Pred[,1] = DHx - c_alpha*dci
 			CI_Pred[,1]	= apply(cbind(CI_Pred[,1],0),1,max)
-
-		#	ii = (Ht_u<=Hx); CI_Pred[ii,1] = 0
-
-			dci        	= sqrt(((qD_o[["y"]] - DHx)/c_alpha)^2 + sig2_eps)
+      
+			# dci = approx. standard deviation
+			dci        	= sqrt(((qD_o[["y"]] - DHx)/c_alpha)^2 + sig2_eps) 
 			CI_Pred[,3] = DHx + c_alpha*dci
 			CI_Pred[,3]	= apply(cbind(CI_Pred[,3],0),1,max)
 
-		#	ii = (Ht_o<=Hx); CI_Pred[ii,3]=0
-
+			MSE_Pred <- as.vector(dci^2)
+			KOV_Pred <- updateKOV(MSE_Pred, SK_m$KOV_Pred)
+      
+			if(F){
+			  # compare against exact intervals
+			  EDHx <- E_DHx_HmDm_HT_CIdHt.f(Hx = Hx, 
+			                                Hm=Hm, Dm=Dm, mHt=mHt, sHt=sHt, par.lme=par.lme)
+			  # head(EDHx)
+			  points(x=Hx, y=EDHx[, "q_DHx_u"], lty=4, col="red", lwd=2, type="l")
+			  points(x=Hx, y=EDHx[, "q_DHx_o"], lty=4, col="red", lwd=2, type="l")
+			  points(x=Hx, y=CI_Pred[, 1], lty=5, col="green", lwd=2, type="l")
+			  points(x=Hx, y=CI_Pred[, 3], lty=5, col="green", lwd=2, type="l")
+			  points(x=Hx, y=CI_Mean[, 1], lty=3, col="brown", lwd=2, type="l")
+			  points(x=Hx, y=CI_Mean[, 3], lty=3, col="brown", lwd=2, type="l")
+			  ## symmetry of intervals
+			  plot(x=EDHx[, "Hx"], y=EDHx[, "DHx"] - EDHx[, "q_DHx_u"], type="b", pch="u")
+			  points(x=EDHx[, "Hx"], y=EDHx[, "q_DHx_o"] - EDHx[, "DHx"], type="b", pch="o")
+			  points(x=Hx, y=CI_Mean[, 2] - CI_Mean[, 1], type="b", pch="U")
+			  points(x=Hx, y=CI_Mean[, 3] - CI_Mean[, 2], type="b", pch="O")
+			  points(x=Hx, y=CI_Pred[, 2] - CI_Pred[, 1], type="b", pch="h")
+			  points(x=Hx, y=CI_Pred[, 3] - CI_Pred[, 2], type="b", pch="d")
+			}
+			
 			if(F){
 				plot(Hx,CI_Mean[,3],type="n")
 				matlines(Hx,CI_Mean, col = "blue", lwd=2, lty=1)
@@ -288,12 +327,14 @@ function( Hx, Hm, Dm, mHt, sHt = 0, par.lme, Rfn=list(fn="sig2"), ...){
 			CI_Mean = cbind(DHx - c_alpha*sqrt(MSE_Mean),DHx,DHx + c_alpha*sqrt(MSE_Mean))
 			CI_Pred = cbind(DHx - c_alpha*sqrt(MSE_Pred),DHx,DHx + c_alpha*sqrt(MSE_Pred))
 
+			KOV_Mean <- SK_m$KOV_Mean 
+			KOV_Pred <- SK_m$KOV_Pred
 		}
 
 
 		return(list(DHx = DHx, Hx = Hx[order(Hx)],
-		            MSE_Mean = MSE_Mean, CI_Mean = CI_Mean, KOV_Mean = SK_m$KOV_Mean,
-		            MSE_Pred = MSE_Pred, CI_Pred = CI_Pred, KOV_Pred = SK_m$KOV_Pred,
+		            MSE_Mean = MSE_Mean, CI_Mean = CI_Mean, KOV_Mean = KOV_Mean,
+		            MSE_Pred = MSE_Pred, CI_Pred = CI_Pred, KOV_Pred = KOV_Pred,
 		            Rfn=Rfn))
 
   }

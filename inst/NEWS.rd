@@ -1,6 +1,18 @@
 \name{NEWS}
 \title{News for Package \pkg{TapeR}}
 
+\section{Changes in version 0.5.2}{
+  \itemize{
+    \item improved calculation of approximate confidence intervals for diamter
+    estimation in E_DHx_HmDm_HT.f() in case of sHT > 0. Especially changed 
+    smooth.spline estimation of confidence bands from fixed degrees of freedom 
+    to all.knots=TRUE to more precisely follow the data, especially at the 
+    lower stem part. Also updated the return list to reflect the approximate MSE
+    in all elements, not only in the confidence bounds (before, list elements 
+    hold the information of expected taper curve, without the extra uncertainty
+    due to measurement error in tree height).
+  }
+}
 \section{Changes in version 0.5.1}{
   \itemize{
     \item added KOV_Mean and KOV_Pred to output of E_DHx_HmDm_HT.f()
