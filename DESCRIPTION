@@ -1,8 +1,8 @@
 Package: TapeR
 Type: Package
 Title: Flexible Tree Taper Curves Based on Semiparametric Mixed Models
-Version: 0.5.2
-Date: 2023-02-24
+Version: 0.5.3
+Date: 2023-08-09
 Authors@R: c(person(given = "Edgar", family = "Kublin", role = "aut"),
               person(given = "Johannes", family = "Breidenbach", role = c("ctb"),	
               email = "job@nibio.no"),
@@ -26,10 +26,10 @@ Depends: nlme, splines, pracma
 Suggests: testthat
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-02-25 06:53:12 UTC; christian
+Packaged: 2023-08-09 14:03:49 UTC; Christian.Vonderach
 Author: Edgar Kublin [aut],
   Johannes Breidenbach [ctb],
   Christian Vonderach [ctb, cre]
 Maintainer: Christian Vonderach <christian.vonderach@forst.bwl.de>
 Repository: CRAN
-Date/Publication: 2023-02-25 07:30:02 UTC
+Date/Publication: 2023-08-16 07:22:33 UTC

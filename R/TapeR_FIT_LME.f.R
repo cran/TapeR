@@ -125,8 +125,11 @@ function(Id, x, y, knt_x, ord_x, knt_z, ord_z, IdKOVb = "pdSymm", control = list
 		KOVb_rnd <- matrix(getVarCov(fit.lme), ncol=ncol(getVarCov(fit.lme)))
 		KORb_rnd <- cov2cor(KOVb_rnd)
 	}
-
+  
 	theta <- attr(fit.lme$apVar, "Pars")
+	if(is.null(theta)){
+	  stop(fit.lme$apVar)
+	}
 	KOV_theta <- matrix(fit.lme$apVar, ncol=length(theta), byrow=T)
 
 	sig2_eps <- as.numeric(exp(theta["lSigma"])^2)
